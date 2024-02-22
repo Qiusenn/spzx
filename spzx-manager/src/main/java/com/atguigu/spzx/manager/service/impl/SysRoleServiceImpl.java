@@ -40,6 +40,24 @@ public class SysRoleServiceImpl implements SysRoleService {
      */
     @Override
     public void saveSysRole(SysRole sysRole) {
-        sysRoleMapper.saveSysRole(sysRole) ;
+        sysRoleMapper.saveSysRole(sysRole);
+    }
+
+    /**
+     * 修改用户
+     * @param sysRole
+     */
+    @Override
+    public void updateSysRole(SysRole sysRole) {
+        sysRoleMapper.updateSysRole(sysRole);
+    }
+
+    /**
+     * 删除用户
+     * @param roleId
+     */
+    @Override
+    public void deleteById(Long roleId) {
+        sysRoleMapper.deleteById(roleId);
     }
 }

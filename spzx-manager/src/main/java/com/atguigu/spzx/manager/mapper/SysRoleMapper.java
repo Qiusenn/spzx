@@ -11,4 +11,8 @@ public interface SysRoleMapper {
     List<SysRole> findByPage(String roleName);
 
     void saveSysRole(SysRole sysRole);
+
+    void updateSysRole(SysRole sysRole);
+
+    void deleteById(Long roleId);
 }

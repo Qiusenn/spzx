@@ -42,4 +42,26 @@ public class SysRoleController {
         sysRoleService.saveSysRole(sysRole) ;
         return Result.build(null , ResultCodeEnum.SUCCESS) ;
     }
+
+    /**
+     * 修改用户
+     * @param sysRole
+     * @return
+     */
+    @PutMapping(value = "/updateSysRole")
+    public Result updateSysRole(@RequestBody SysRole sysRole) {
+        sysRoleService.updateSysRole(sysRole) ;
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+
+    /**
+     * 逻辑删除用户【数据库设置is_delete=1】
+     * @param roleId
+     * @return
+     */
+    @DeleteMapping(value = "/deleteById/{roleId}")
+    public Result deleteById(@PathVariable(value = "roleId") Long roleId) {
+        sysRoleService.deleteById(roleId) ;
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
 }

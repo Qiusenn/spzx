@@ -20,4 +20,17 @@ public interface SysRoleService {
      * @return
      */
     void saveSysRole(SysRole sysRole);
+
+    /**
+     * 修改用户
+     * @param sysRole
+     */
+    void updateSysRole(SysRole sysRole);
+
+    /**
+     * 逻辑删除用户【数据库设置is_delete=1】
+     * @param roleId
+     * @return
+     */
+    void deleteById(Long roleId);
 }

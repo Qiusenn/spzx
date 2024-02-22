@@ -32,4 +32,14 @@ public class SysRoleServiceImpl implements SysRoleService {
         return pageInfo;
 
     }
+
+    /**
+     * 添加用户
+     * @param sysRole
+     * @return
+     */
+    @Override
+    public void saveSysRole(SysRole sysRole) {
+        sysRoleMapper.saveSysRole(sysRole) ;
+    }
 }

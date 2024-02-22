@@ -13,4 +13,11 @@ public interface SysRoleService {
      * @return
      */
     PageInfo<SysRole> findByPage(SysRoleDto sysRoleDto, Integer current, Integer limit);
+
+    /**
+     * 添加用户
+     * @param sysRole
+     * @return
+     */
+    void saveSysRole(SysRole sysRole);
 }

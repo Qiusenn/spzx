@@ -18,7 +18,7 @@ public class SysRoleController {
 
     /**
      * 角色列表方法
-     * @param current     当前页
+     * @param current     当前页码
      * @param limit       每页显示记录数
      * @param sysRoleDto  条件角色名称对象
      * @return

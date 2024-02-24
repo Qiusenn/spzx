@@ -9,6 +9,8 @@ import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(value = "/admin/system/sysRole")
@@ -63,5 +65,16 @@ public class SysRoleController {
     public Result deleteById(@PathVariable(value = "roleId") Long roleId) {
         sysRoleService.deleteById(roleId) ;
         return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+
+    /**
+     * 查询所有角色以及根据用户id查询对应的角色封装返回
+     * @param userId
+     * @return
+     */
+    @GetMapping(value = "/findAllRoles/{userId}")
+    public Result<Map<String , Object>> findAllRoles(@PathVariable(value = "userId") Long userId) {
+        Map<String, Object> resultMap = sysRoleService.findAllRoles(userId);
+        return Result.build(resultMap , ResultCodeEnum.SUCCESS)  ;
     }
 }

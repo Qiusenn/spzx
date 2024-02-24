@@ -4,6 +4,8 @@ import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysRole;
 import com.github.pagehelper.PageInfo;
 
+import java.util.Map;
+
 public interface SysRoleService {
     /**
      * 角色列表方法
@@ -33,4 +35,11 @@ public interface SysRoleService {
      * @return
      */
     void deleteById(Long roleId);
+
+    /**
+     * 查询所有角色以及根据用户id查询对应的角色封装返回
+     * @param userId
+     * @return
+     */
+    Map<String, Object> findAllRoles(Long userId);
 }

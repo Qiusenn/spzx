@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.spzx.manager.mapper.SysMenuMapper">
+
+    <resultMap id="sysMenuMap" type="com.atguigu.spzx.model.entity.system.SysMenu" autoMapping="true"></resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        id,parent_id,title,component,sort_value,status,create_time,update_time,is_deleted
+    </sql>
+
+    <select id="selectAll" resultMap="sysMenuMap">
+        select <include refid="columns" />
+        from sys_menu
+        where
+        is_deleted = 0
+        order by sort_value
+    </select>
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into sys_menu (
+            id,
+            parent_id,
+            title,
+            component,
+            sort_value,
+            status
+        ) values (
+                     #{id},
+                     #{parentId},
+                     #{title},
+                     #{component},
+                     #{sortValue},
+                     #{status}
+                 )
+    </insert>
+
+    <update id="updateById" >
+        update sys_menu set
+        <if test="parentId != null and parentId != ''">
+            parent_id = #{parentId},
+        </if>
+        <if test="title != null and title != ''">
+            title = #{title},
+        </if>
+        <if test="component != null and component != ''">
+            component = #{component},
+        </if>
+        <if test="sortValue != null">
+            sort_value = #{sortValue},
+        </if>
+        <if test="status != null">
+            status = #{status},
+        </if>
+        update_time =  now()
+        where
+        id = #{id}
+    </update>
+
+    <select id="countByParentId" resultType="Integer">
+        select count(id)
+        from sys_menu
+        where
+            parent_id = #{parentId}
+          and is_deleted = 0
+    </select>
+
+    <update id="deleteById">
+        update sys_menu set
+            update_time = now() ,
+            is_deleted = 1
+        where
+            id = #{id}
+    </update>
+
+</mapper>

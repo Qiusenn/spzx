@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.service;
 
 import com.atguigu.spzx.model.entity.system.SysMenu;
+import com.atguigu.spzx.model.vo.system.SysMenuVo;
 
 import java.util.List;
 
@@ -32,4 +33,10 @@ public interface SysMenuService {
      * @return
      */
     void removeById(Long id);
+
+    /**
+     * 获取当前用户能够访问的菜单 动态菜单
+     * @return
+     */
+    List<SysMenuVo> findUserMenuList();
 }

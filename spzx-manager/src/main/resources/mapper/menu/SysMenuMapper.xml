@@ -74,4 +74,15 @@
             id = #{id}
     </update>
 
+    <select id="selectListByUserId" resultMap="sysMenuMap">
+        SELECT DISTINCT m.* FROM sys_menu m
+        INNER JOIN sys_role_menu rm ON rm.menu_id = m.id
+        INNER JOIN sys_user_role ur ON ur.role_id = rm.role_id
+        WHERE ur.user_id=#{userId} and m.is_deleted = 0
+    </select>
+
+    <select id="selectById" resultMap="sysMenuMap">
+        select <include refid="columns" /> from sys_menu where id = #{id}
+    </select>
+
 </mapper>

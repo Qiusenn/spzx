@@ -99,10 +99,8 @@ public class SysMenuServiceImpl implements SysMenuService {
         SysUser sysUser = AuthContextUtil.get();
         Long userId = sysUser.getId();          // 获取当前登录用户的id
 
-        List<SysMenu> sysMenuList = sysMenuMapper.selectListByUserId(userId) ;
-
         //构建树形数据
-        List<SysMenu> sysMenuTreeList = MenuHelper.buildTree(sysMenuList);
+        List<SysMenu> sysMenuTreeList = MenuHelper.buildTree(sysMenuMapper.selectListByUserId(userId));
         return this.buildMenus(sysMenuTreeList);
     }
 

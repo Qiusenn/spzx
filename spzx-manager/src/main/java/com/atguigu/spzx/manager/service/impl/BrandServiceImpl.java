@@ -5,11 +5,13 @@ import com.atguigu.spzx.manager.service.BrandService;
 import com.atguigu.spzx.model.entity.product.Brand;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class BrandServiceImpl implements BrandService {
     private BrandMapper brandMapper ;
 
@@ -33,5 +35,10 @@ public class BrandServiceImpl implements BrandService {
     @Override
     public void deleteById(Long id) {
         brandMapper.deleteById(id) ;
+    }
+
+    @Override
+    public List<Brand> findAll() {
+        return brandMapper.findAll();
     }
 }

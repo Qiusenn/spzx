@@ -17,6 +17,13 @@
         order by id desc
     </select>
 
+    <select id="findAll" resultMap="brandMap">
+        select <include refid="columns" />
+        from brand
+        where is_deleted = 0
+        order by id desc
+    </select>
+
     <insert id="save">
         insert into brand (
             id,

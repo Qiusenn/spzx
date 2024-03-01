@@ -8,6 +8,8 @@ import com.github.pagehelper.PageInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @AllArgsConstructor
 @RequestMapping(value="/admin/product/productSpec")
@@ -37,6 +39,12 @@ public class ProductSpecController {
     public Result removeById(@PathVariable Long id) {
         productSpecService.deleteById(id);
         return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+
+    @GetMapping("findAll")
+    public Result findAll() {
+        List<ProductSpec> list = productSpecService.findAll();
+        return Result.build(list , ResultCodeEnum.SUCCESS) ;
     }
 
 }

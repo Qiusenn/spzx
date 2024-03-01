@@ -37,6 +37,6 @@ public class CategoryBrandController {
     @DeleteMapping("/deleteById/{id}")
     public Result deleteById(@PathVariable Long id) {
         categoryBrandService.deleteById(id);
-        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+        return Result.build(null , ResultCodeEnum.SUCCESS);
     }
 }

@@ -10,4 +10,6 @@ public interface ProductDetailsMapper {
     ProductDetails selectByProductId(Long id);
 
     void updateById(ProductDetails productDetails);
+
+    void deleteByProductId(Long id);
 }

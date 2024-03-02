@@ -100,5 +100,13 @@
         id = #{id}
     </update>
 
+    <update id="deleteByProductId">
+        update product_sku set
+           update_time = now() ,
+           is_deleted = 1
+        where
+            product_id = #{productId}
+    </update>
+
 
 </mapper>

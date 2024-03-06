@@ -7,13 +7,18 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.231.139:8848
+        server-addr: 192.168.231.141:8848
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://192.168.231.139:3306/db_spzx?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://192.168.231.141:3306/db_spzx?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 1234
+  data:
+    redis:
+      host: 192.168.231.141
+      port: 6379
+      password: 1234
 
 mybatis:
   config-location: classpath:mybatis-config.xml

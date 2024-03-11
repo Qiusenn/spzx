@@ -1,17 +1,25 @@
 package com.atguigu.spzx.user.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.atguigu.spzx.common.exception.GuiguException;
+import com.atguigu.spzx.model.dto.h5.UserLoginDto;
 import com.atguigu.spzx.model.dto.h5.UserRegisterDto;
 import com.atguigu.spzx.model.entity.user.UserInfo;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
+import com.atguigu.spzx.model.vo.h5.UserInfoVo;
 import com.atguigu.spzx.user.mapper.UserInfoMapper;
 import com.atguigu.spzx.user.service.UserInfoService;
+import com.atguigu.spzx.utils.AuthContextUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 @Service
 @AllArgsConstructor
@@ -63,4 +71,50 @@ public class UserInfoServiceImpl implements UserInfoService {
         // 删除Redis中的数据
         redisTemplate.delete("phone:code:" + username) ;
     }
+
+    @Override
+    public String login(UserLoginDto userLoginDto) {
+        String username = userLoginDto.getUsername();
+        String password = userLoginDto.getPassword();
+
+        //校验参数
+        if(StringUtils.isEmpty(username) ||
+                StringUtils.isEmpty(password)) {
+            throw new GuiguException(ResultCodeEnum.DATA_ERROR);
+        }
+
+        UserInfo userInfo = userInfoMapper.getByUsername(username);
+        if(null == userInfo) {
+            throw new GuiguException(ResultCodeEnum.LOGIN_ERROR);
+        }
+
+        //校验密码
+        String md5InputPassword = DigestUtils.md5DigestAsHex(password.getBytes());
+        if(!md5InputPassword.equals(userInfo.getPassword())) {
+            throw new GuiguException(ResultCodeEnum.LOGIN_ERROR);
+        }
+
+        //校验是否被禁用
+        if(userInfo.getStatus() == 0) {
+            throw new GuiguException(ResultCodeEnum.ACCOUNT_STOP);
+        }
+
+        String token = UUID.randomUUID().toString().replaceAll("-", "");
+        redisTemplate.opsForValue().set("user:spzx:" + token, JSON.toJSONString(userInfo), 30, TimeUnit.DAYS);
+        return token;
+    }
+
+    /**
+     * 获取当前用户信息
+     * @param token
+     * @return
+     */
+    @Override
+    public UserInfoVo getCurrentUserInfo(String token) {
+        UserInfo userInfo = AuthContextUtil.getUserInfo();
+        UserInfoVo userInfoVo = new UserInfoVo();
+        BeanUtils.copyProperties(userInfo, userInfoVo);
+        return userInfoVo ;
+    }
+
 }

@@ -1,16 +1,16 @@
 package com.atguigu.spzx.user.controller;
 
+import com.atguigu.spzx.model.dto.h5.UserLoginDto;
 import com.atguigu.spzx.model.dto.h5.UserRegisterDto;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
+import com.atguigu.spzx.model.vo.h5.UserInfoVo;
 import com.atguigu.spzx.user.service.UserInfoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "会员用户接口")
 @RestController
@@ -26,5 +26,21 @@ public class UserInfoController {
         userInfoService.register(userRegisterDto);
         return Result.build(null , ResultCodeEnum.SUCCESS) ;
     }
+
+    @Operation(summary = "会员登录")
+    @PostMapping("login")
+    public Result login(@RequestBody UserLoginDto userLoginDto) {
+        return Result.build(userInfoService.login(userLoginDto), ResultCodeEnum.SUCCESS);
+    }
+
+    @Operation(summary = "获取当前登录用户信息")
+    @GetMapping("auth/getCurrentUserInfo")
+    public Result<UserInfoVo> getCurrentUserInfo(HttpServletRequest request) {
+        String token = request.getHeader("token");
+        UserInfoVo userInfoVo = userInfoService.getCurrentUserInfo(token) ;
+        return Result.build(userInfoVo , ResultCodeEnum.SUCCESS) ;
+    }
+
+
 
 }

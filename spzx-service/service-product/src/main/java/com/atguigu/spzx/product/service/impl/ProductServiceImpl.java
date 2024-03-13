@@ -24,6 +24,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
+
     private ProductSkuMapper productSkuMapper;
 
     private ProductMapper productMapper;
@@ -69,5 +70,10 @@ public class ProductServiceImpl implements ProductService {
         productItemVo.setSpecValueList(JSON.parseArray(product.getSpecValue()));
         productItemVo.setSkuSpecValueMap(skuSpecValueMap);
         return productItemVo;
+    }
+
+    @Override
+    public ProductSku getBySkuId(Long skuId) {
+        return productSkuMapper.getById(skuId);
     }
 }

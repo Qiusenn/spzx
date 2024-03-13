@@ -30,7 +30,12 @@ spring:
           uri: lb://service-user
           predicates:
             - Path=/*/user/**
+        - id: service-cart
+          uri: lb://service-cart
+          predicates:
+            - Path=/*/order/cart/**
   data:
     redis:
-      host: 192.168.231.141
+      host: 1.12.237.207
       port: 6379
+      password: 1234

@@ -10,4 +10,5 @@ public interface UserInfoService {
     String login(UserLoginDto userLoginDto);
 
     UserInfoVo getCurrentUserInfo(String token);
+
 }

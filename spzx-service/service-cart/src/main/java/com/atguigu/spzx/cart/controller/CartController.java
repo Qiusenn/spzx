@@ -63,4 +63,18 @@ public class CartController {
         cartService.clearCart();
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
+
+    @Operation(summary="选中的购物车")
+    @GetMapping(value = "/auth/getAllCkecked")
+    public List<CartInfo> getAllCkecked() {
+        List<CartInfo> cartInfoList = cartService.getAllCkecked();
+        return cartInfoList;
+    }
+
+    @GetMapping(value = "/auth/deleteChecked")
+    public Result deleteChecked() {
+        cartService.deleteChecked();
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+
 }

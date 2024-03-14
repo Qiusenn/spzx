@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.atguigu.spzx.order.mapper.OrderInfoMapper">
+
+    <resultMap id="orderInfoMap" type="com.atguigu.spzx.model.entity.order.OrderInfo" autoMapping="true">
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+        id,user_id,nick_name,order_no,coupon_id,total_amount,coupon_amount,original_total_amount,feight_fee,pay_type,order_status,receiver_name,receiver_phone,receiver_tag_name,receiver_province,receiver_city,receiver_district,receiver_address,payment_time,delivery_time,receive_time,remark,cancel_time,cancel_reason,create_time,update_time,is_deleted
+    </sql>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into order_info (
+            id,
+            user_id,
+            nick_name,
+            order_no,
+            coupon_id,
+            total_amount,
+            coupon_amount,
+            original_total_amount,
+            feight_fee,
+            pay_type,
+            order_status,
+            receiver_name,
+            receiver_phone,
+            receiver_tag_name,
+            receiver_province,
+            receiver_city,
+            receiver_district,
+            receiver_address,
+            payment_time,
+            delivery_time,
+            receive_time,
+            remark,
+            cancel_time,
+            cancel_reason
+        ) values (
+                     #{id},
+                     #{userId},
+                     #{nickName},
+                     #{orderNo},
+                     #{couponId},
+                     #{totalAmount},
+                     #{couponAmount},
+                     #{originalTotalAmount},
+                     #{feightFee},
+                     #{payType},
+                     #{orderStatus},
+                     #{receiverName},
+                     #{receiverPhone},
+                     #{receiverTagName},
+                     #{receiverProvince},
+                     #{receiverCity},
+                     #{receiverDistrict},
+                     #{receiverAddress},
+                     #{paymentTime},
+                     #{deliveryTime},
+                     #{receiveTime},
+                     #{remark},
+                     #{cancelTime},
+                     #{cancelReason}
+                 )
+    </insert>
+
+    <select id="getById" resultMap="orderInfoMap">
+        select <include refid="columns" />
+        from order_info
+        where
+        id = #{id}
+    </select>
+
+
+    <select id="findUserPage" resultMap="orderInfoMap">
+        select <include refid="columns" />
+        from order_info
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="orderStatus != null">
+                and order_status = #{orderStatus}
+            </if>
+            and is_deleted = 0
+        </where>
+        order by id desc
+    </select>
+
+</mapper>
